@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "gunicorn app_cloud:app --bind 0.0.0.0:$PORT"
+
+[variables]
+DASHBOARD_USER = { required = true }
+DASHBOARD_PASSWORD = { required = true }
+LOCAL_MODE = "false"
+GIST_ID = { required = true }
+GITHUB_TOKEN = { required = true }

@@ -41,14 +41,27 @@ def prepare_summary_data():
         data["output_tokens_formatted"] = format_tokens(data["output_tokens"])
         data["calculated_cost_formatted"] = format_currency(data["calculated_cost"])
     
+    # Convert None model keys to "Unknown" for JSON serialization
+    by_model_fixed = {}
+    for model, data in summary["by_model"].items():
+        key = str(model) if model is not None else "Unknown"
+        by_model_fixed[key] = data
+    summary["by_model"] = by_model_fixed
+
     # Prepare chart data
     daily_labels = [day["date"] for day in daily_costs]
     daily_costs_values = [day["cost"] for day in daily_costs]
     
     # Top 10 models by cost for pie chart
-    model_items = sorted(summary["by_model"].items(), 
-                        key=lambda x: x[1]["calculated_cost"], reverse=True)[:10]
-    model_names = [model[:30] + ("..." if len(model) > 30 else "") for model, _ in model_items]
+    # Ensure model names are strings for sorting stability
+    model_items = []
+    for model, data in summary["by_model"].items():
+        safe_model = str(model) if model is not None else "Unknown"
+        model_items.append((safe_model, data))
+    
+    model_items = sorted(model_items, 
+                        key=lambda x: (x[1]["calculated_cost"], x[0]), reverse=True)[:10]
+    model_names = [(model[:30] + ("..." if len(model) > 30 else "")) for model, _ in model_items]
     model_costs = [data["calculated_cost"] for _, data in model_items]
     
     summary["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
