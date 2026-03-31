@@ -178,6 +178,7 @@ def logs():
     return "Log viewer - coming soon"
 
 @app.route("/health")
+@auth.login_required(optional=True)
 def health():
     """Health check endpoint (no auth required)."""
     return jsonify({"status": "ok", "mode": "local" if LOCAL_MODE else "cloud"})
