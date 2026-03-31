@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: erasmus-dashboard
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app_cloud:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DASHBOARD_USER
+        sync: false
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: LOCAL_MODE
+        value: false
+      - key: GIST_ID
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.9.6
