@@ -1,6 +1,6 @@
-# Erasmus Dashboard
+# Erasmus Dashboard (Vercel Deploy Test)
 
-**Live cost tracking dashboard for Hermes Agent** – Monitor LLM usage, spending trends, and system metrics.
+**Live cost tracking dashboard for Hermes Agent - Vercel test** – Monitor LLM usage, spending trends, and system metrics.
 
 ![Dashboard Preview](https://img.shields.io/badge/status-production%20ready-green)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
